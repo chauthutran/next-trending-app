@@ -5,6 +5,7 @@ import { JSONObject } from '@/libs/definations';
 import { useEffect, useState } from 'react';
 import ArticleList from './ArticleList';
 import TrendSummary from './TrendSummary';
+import ImageGallery from './ImageGallery';
 
 
 export default function TrendByCategory({ category }: { category: JSONObject }) {
@@ -92,8 +93,8 @@ export default function TrendByCategory({ category }: { category: JSONObject }) 
 
 	return (
 		<div>
-			<div>
 				<TrendSummary category={category} />
+				<ImageGallery category={category} />
 				<ArticleList category={category} />
 
 
@@ -115,8 +116,6 @@ export default function TrendByCategory({ category }: { category: JSONObject }) 
           ))}
         </ul> */}
 
-			</div>
-			{/* } */}
 		</div>
 	);
 }

@@ -10,9 +10,9 @@ export default function TrendSummary({ category }: { category: JSONObject }) {
 	
 	const generateQuestion = () => {
 		const curYear = new Date().getFullYear();
-		const categoryChilrenName = category.children.map((item: JSONObject) => item.name );
+		// const categoryChilrenName = category.children.map((item: JSONObject) => item.name );
 		let question = `What are the top three trends in ${category.name} for  ${curYear}? `;
-		question += ` Focus on ${categoryChilrenName.join(", ")}?`;
+		// question += ` Focus on ${categoryChilrenName.join(", ")}?`;
 
 		return question;
 	}
@@ -39,23 +39,16 @@ export default function TrendSummary({ category }: { category: JSONObject }) {
 
 
 	if ( summary === null ) return (<div></div>);
-console.log("summary", summary);
+	
     return (
 		<>
 			{summary.length === 0 && <div>Loading summary ...</div>}
-			{summary.length == 1 && summary[0] !== "" && <div className="m-3 p-3 border border-gray-300 rounded shadow-lg">
-					<h2 className="text-xl my-2">{question}</h2>
+		
+			{( (summary.length == 1 && summary[0] !== "" ) || summary.length > 1 ) && <div className="m-3 p-3 border border-gray-300 rounded shadow-lg bg-muted-olive">
+					{/* <h2 className="">{question}</h2> */}
 					<div>
 						{summary.map((str, idx) => (
-							<p key={`summary_${idx}`}>{str}</p>
-						))}
-					</div>
-				</div>}
-			{summary.length > 1 && <div className="m-3 p-3 border border-gray-300 rounded shadow-lg">
-					<h2 className="text-2xl">{question}</h2>
-					<div>
-						{summary.map((str, idx) => (
-							<p key={`summary_${idx}`}>{str}</p>
+							<p key={`summary_${idx}`} className="text-justify">{str}</p>
 						))}
 					</div>
 				</div>}

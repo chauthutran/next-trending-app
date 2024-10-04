@@ -1,6 +1,7 @@
 import { JSONObject } from '@/libs/definations';
 import React, { useEffect, useState } from 'react';
 
+
 const NEWS_API_KEY = '14e39864eded437e9dd5bdcca0a63409';
 
 
@@ -20,6 +21,7 @@ export default function ArticleList({ category }:{category: JSONObject}) {
 		setArticles(results);
 		setLoading(false);
 	}
+
 
     useEffect(() => {
 		fetchArticles();
