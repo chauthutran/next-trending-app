@@ -30,8 +30,8 @@ export default function Navigation({ handleOnItemClick }: { handleOnItemClick: (
     return (
         <nav className={`${gridClass}`}>
             {categories!.map((category, index) => (
-				<button className="flex flex-col items-center justify-center space-y-1" onClick={() => handleOnItemClick(category)} >
-                    <div className="text-lg rounded-full bg-minty-breeze w-fit px-3 py-2 shadow-lg hover:bg-coral-sunset hover:shadow-red-600 transition-colors duration-300" >{category.icon}</div>
+				<button className="flex flex-col items-center justify-start space-y-1" onClick={() => handleOnItemClick(category)} >
+                    <div className="text-lg rounded-full bg-golden-yellow bg-opacity-30 w-fit px-3 py-2 shadow-lg hover:bg-coral-sunset hover:shadow-red-600 transition-colors duration-300" >{category.icon}</div>
 					<div className="text-xs">{category.name}</div>
                 </button>
             ))}
