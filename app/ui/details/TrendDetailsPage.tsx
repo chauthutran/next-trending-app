@@ -93,9 +93,9 @@ export default function TrendByCategory({ category }: { category: JSONObject }) 
 
 	return (
 		<div>
-				<TrendSummary category={category} />
+				{/* <TrendSummary category={category} />
 				<ImageGallery category={category} />
-				<ArticleList category={category} />
+				<ArticleList category={category} /> */}
 
 
 				{/* <ul>
