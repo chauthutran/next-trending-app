@@ -14,15 +14,11 @@ export default function CategorySelectForm() {
 	const { user, setUser } = useAuth();
 	const [categories, setCategories] = useState<JSONObject[] | null>(null);
 	const [selectedItems, setSelectedItems] = useState<JSONObject[]>([]);
-	const [loading, setLoading] = useState(false);
 
 
 	const fetchCategories = async () => {
-		setLoading(true);
 		const response = await dbService.fetchCategories();
 		setCategories(response.data);
-
-		setLoading(false);
 	};
 
 	const handleCategoryClick = (category: JSONObject) => {
@@ -30,15 +26,12 @@ export default function CategorySelectForm() {
 		let updatedSelectedCategories;
 
 		if (isSelected) {
-			// console.log("======== updatedSelectedCategories 1", selectedItems);
 			updatedSelectedCategories = selectedItems.filter(cat => cat._id !== category._id);
-			// console.log("updatedSelectedCategories 2", updatedSelectedCategories);
 		} else {
 			updatedSelectedCategories = [...selectedItems, category];
 		}
 
 		setSelectedItems(updatedSelectedCategories);
-		// onSelectionChange(updatedSelectedCategories);
 	};
 
 	useEffect(() => {
@@ -46,8 +39,8 @@ export default function CategorySelectForm() {
 	}, []);
 
 	const saveSelectedItems = async() => {
-		// const response = await dbService.saveFollowedCategories(user!._id, selectedItems);
-		const response = await dbService.saveFollowedCategories("670235925f2b78d23691af04", selectedItems);
+		const response = await dbService.saveFollowedCategories(user!._id, selectedItems);
+		// const response = await dbService.saveFollowedCategories("670235925f2b78d23691af04", selectedItems);
 		if( response.status === "success" ) {
 			alert("The followed categories are saved !");
 		}

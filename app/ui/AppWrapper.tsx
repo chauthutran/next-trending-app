@@ -7,6 +7,7 @@ import Navigation from "./layout/Navigation";
 import { useAppPage } from "@/contexts/AppPageContext";
 import * as Constant from "@/libs/constants";
 import CategorySelectForm from "./user/register/CategorySelectForm";
+import RegisterForm from "./user/register/RegisterForm";
 
 
 export default function AppWrapper() {
@@ -23,8 +24,7 @@ export default function AppWrapper() {
 
             <main className={`flex-1 overflow-auto flex`}>
                 {appPage === Constant.PAGE_USER_REGISTRATION && <div className="mx-5 my-5">
-                    {/* <RegisterForm /> */}
-                    <CategorySelectForm />
+                    <RegisterForm />
                 </div>}
                 {appPage === Constant.PAGE_USER_CATETORY_SELECTORS && <CategorySelectForm /> }
                 
