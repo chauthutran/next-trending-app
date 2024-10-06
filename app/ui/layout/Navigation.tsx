@@ -36,7 +36,7 @@ export default function Navigation({ handleOnItemClick }: { handleOnItemClick: (
 					className="flex-1 flex flex-col items-center justify-start space-y-1"
 					onClick={() => handleOnItemClick(category)}
 				>
-					<div className="text-xl rounded-b-full bg-blush-pink w-fit px-3 py-3 shadow-lg hover:bg-peachy-keen hover:shadow-red-600 transition-colors duration-300">
+					<div className="text-lg rounded-b-full bg-golden-yellow bg-opacity-50 w-fit px-3 py-2 shadow-lg hover:bg-peachy-keen hover:shadow-red-600 transition-colors duration-300">
 						{category.icon}
 					</div>
 					<div className="text-xs">{category.name}</div>

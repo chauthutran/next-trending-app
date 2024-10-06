@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import * as dbService from "@/libs/mongodb";
 import { JSONObject } from '@/libs/definations';
+import * as Constant from "@/libs/constants";
 
 interface AuthContextProps {
 	user: JSONObject | null;
@@ -11,7 +12,7 @@ interface AuthContextProps {
 	register: (user: JSONObject) => Promise<void>;
 	setUser: (user: JSONObject | null) => void,
 	error: string | null;
-	loading: boolean;
+	processStatus: string;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -21,7 +22,7 @@ const AuthContext = createContext<AuthContextProps>({
 	register: async(user: JSONObject) => {},
 	setUser: (user: JSONObject | null) => {},
 	error: null,
-	loading: false
+	processStatus: ""
 });
 
 export const useAuth = (): AuthContextProps => {
@@ -35,23 +36,23 @@ export const useAuth = (): AuthContextProps => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<any>(null);
-	const [loading, setLoading] = useState<boolean>(false);
+	const [processStatus, setProcessStatus] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
 
 	const login = async (email: string, password: string) => {
-		setLoading(true);
+		setProcessStatus(Constant.RESPONSE_LOGIN_REQUEST);
 		setError(null);
 
 		const response: JSONObject = await dbService.login({email, password});
 
 		if (response.status != "success")  {
+			setProcessStatus(Constant.RESPONSE_LOGIN_FAILURE);
 			setError(response.message);
 		}
 		else {
 			setUser(response.data);
+			setProcessStatus(Constant.RESPONSE_LOGIN_SUCCESS);
 		}
-
-		setLoading(false);
 	};
 
 	const logout = () => {
@@ -59,20 +60,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const register = async(userData: JSONObject) => {
-		setLoading(true);
+		setProcessStatus(Constant.RESPONSE_REGISTER_USER_REQUEST);
 		setError(null);
 		
 		const response: JSONObject = await dbService.register(userData);
+
 		if (response.status != "success")  {
 			setError(response.message);
+			setProcessStatus(Constant.RESPONSE_REGISTER_USER_FAILURE);
 		}
 		else {
 			setUser(response.data);
+			setProcessStatus(Constant.RESPONSE_REGISTER_USER_SUCCESS);
 		}
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, setUser, loading, error: error, login, logout, register }}>
+		<AuthContext.Provider value={{ user, setUser, processStatus, error: error, login, logout, register }}>
 			{children}
 		</AuthContext.Provider>
 	);

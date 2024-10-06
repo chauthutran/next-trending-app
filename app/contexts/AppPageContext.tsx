@@ -9,7 +9,7 @@ interface MainUiContextProps {
 }
 
 const MainUiContext = createContext<MainUiContextProps>({
-	appPage: Contanst.PAGE_LOGIN,
+	appPage: Contanst.PAGE_HOME,
 	setAppPage: (pageName: String) => {}
 });
 
@@ -23,7 +23,7 @@ export const useAppPage = (): MainUiContextProps => {
 };
 
 export const AppPageProvider = ({ children }: { children: ReactNode }) => {
-	const [appPage, setAppPage] = useState<string>(Contanst.PAGE_LOGIN);
+	const [appPage, setAppPage] = useState<string>(Contanst.PAGE_HOME);
 
 	return (
 		<MainUiContext.Provider value={{ appPage, setAppPage }}>

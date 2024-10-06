@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { JSONObject } from "../definations";
 import connectToDatabase from "./db";
@@ -7,9 +7,10 @@ import * as Encrypt from "./encryptPassword";
 import * as Utils from "@/libs/utils";
 import mongoose from "mongoose";
 
-
-export async function login({email, password}: JSONObject): Promise<JSONObject> {
-
+export async function login({
+	email,
+	password,
+}: JSONObject): Promise<JSONObject> {
 	try {
 		await connectToDatabase();
 		const searchResult = await User.find({ email });
@@ -18,29 +19,31 @@ export async function login({email, password}: JSONObject): Promise<JSONObject> 
 		let matchedUser: JSONObject | null = null;
 		for (let i = 0; i < searchResult.length; i++) {
 			const user = searchResult[i];
-			const matched = await Encrypt.comparePassword(password!, user.password);
+			const matched = await Encrypt.comparePassword(
+				password!,
+				user.password
+			);
 			if (matched) {
 				matchedUser = user;
 				break;
 			}
 		}
 
-		if ( matchedUser === null ) {
-			return ({status: "fail", message: "Username/Password is wrong"});
+		if (matchedUser === null) {
+			return { status: "fail", message: "Username/Password is wrong" };
 		}
 
 		// const teamMemberIdObjs = matchedUser.teamMembers.map((id: string) => new mongoose.Types.ObjectId(id));
 		// const teamMembers = await User.find({ _id: { $in: teamMemberIdObjs } });
 		// matchedUser.teamMembers = teamMembers;
 
-		return ({status: "success", data: Utils.cloneJSONObject( matchedUser )});
+		return { status: "success", data: Utils.cloneJSONObject(matchedUser) };
 	} catch (error: any) {
-		return ({status: "error", message: error.message});
+		return { status: "error", message: error.message };
 	}
 }
 
 export async function register(userData: JSONObject): Promise<JSONObject> {
-	
 	try {
 		await connectToDatabase();
 
@@ -48,41 +51,45 @@ export async function register(userData: JSONObject): Promise<JSONObject> {
 		userData.password = await Encrypt.hashPassword(password);
 
 		const newUser = await User.create(userData);
-		return ({status: "succcess", data: Utils.cloneJSONObject(newUser)});
-
+		return { status: "succcess", data: Utils.cloneJSONObject(newUser) };
 	} catch (error: any) {
 		// return ({status: "error", message: error.message});
 		if (error instanceof mongoose.Error.ValidationError) {
-            return({status: "error",error: 'Validation Error:' + error.message});
-        } else if (error instanceof mongoose.Error.CastError) {
-            return({error: 'Cast Error:' + error.message});
-        } else if (error.code === 11000) {  // Duplicate key error code
-            return({error: 'Duplicate Key Error:' + error.message});
-        } else {
-            return({error: 'UnknownError:' + error.message});
-        }
+			return {
+				status: "error",
+				message: "Validation Error:" + error.message,
+			};
+		} else if (error instanceof mongoose.Error.CastError) {
+			return { status: "error", message: "Cast Error:" + error.message };
+		} else if (error.code === 11000) {
+			// Duplicate key error code
+			return { status: "error",  message: "Duplicate Key Error:" + error.message };
+		} else {
+			return { status: "error", message: "UnknownError:" + error.message };
+		}
 	}
 }
 
+export async function saveFollowedCategories(
+	userId: string,
+	categories: JSONObject[]
+) {
+	try {
+		await connectToDatabase();
 
-// export async function linkTeamMembers() {
-//     try {
-//         await connectToDatabase();
+		const userObjectId = new mongoose.Types.ObjectId(userId);
+		const categoryObjectIdList = categories.map(
+			(category) => new mongoose.Types.ObjectId(category._id)
+		); // Extract ObjectIds
 
-//         // Find all users with the "team_member" role
-//         const teamMembers = await User.find({ role: 'team_member' });
-
-//         // Iterate over each team member and link them to other team members
-//         for (let user of teamMembers) {
-//             user.teamMembers = teamMembers
-//                 .filter(member => member._id.toString() !== user._id.toString()) // Exclude the user from their own teamMembers array
-//                 .map(member => member._id); // Map to ObjectId
-
-//             await user.save();
-//         }
-
-//         console.log('Team members linked successfully.');
-//     } catch (error) {
-//         console.error('Error linking team members:', error);
-//     } 
-// }
+		const updatedUser = await User.findByIdAndUpdate(
+			userObjectId,
+			{ followedCategories: categoryObjectIdList }, // Replaces the current followedCategories
+			{ new: true, runValidators: true } // Return the updated document
+		);
+		
+		return { status: "success", data: Utils.cloneJSONObject(updatedUser) };
+	} catch (error: any) {
+		return { status: "error", message: "UnknownError:" + error.message };
+	}
+}

@@ -8,8 +8,7 @@ import * as Constant from "@/libs/constants";
 
 export default function Header() {
 
-    const { setAppPage } = useAppPage();
-    const [menu, setMenu] = useState("home");
+    const { appPage, setAppPage } = useAppPage();
 
     return (
         <header className="relative px-5 py-2 grid grid-cols-2 text-sm text-electric-blue bg-white">
@@ -27,13 +26,13 @@ export default function Header() {
 
             {/* Left side with icon */}
             <div className="flex space-x-8 justify-center items-center">
-                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${menu === "home" ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`}>Home</button>
-                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${menu === "about" ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`}>About</button>
+                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${appPage === Constant.PAGE_HOME ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_HOME)}>Home</button>
+                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${appPage === Constant.PAGE_ABOUT ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_ABOUT)}>About</button>
                 {/* </div> */}
                 {/* Right side with buttons */}
                 {/* <div className="flex space-x-8 justify-center items-center"> */}
-                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${menu === "login" ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`}>Login</button>
-                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${menu === "register" ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_USER_REGISTRATION)}>Register</button>
+                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${appPage === Constant.PAGE_LOGIN ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_LOGIN)}>Login</button>
+                <button className={`uppercase border-b px-3 hover:border-coral-sunset ${appPage === Constant.PAGE_USER_REGISTRATION ? "bg-coral-sunset text-white rounded-sm" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_USER_REGISTRATION)}>Register</button>
             </div>
 
         </header>

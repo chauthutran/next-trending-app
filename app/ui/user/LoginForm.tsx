@@ -13,7 +13,7 @@ import { useAppPage } from "@/contexts/AppPageContext";
 export default function LoginForm() {
 
 	const { setAppPage } = useAppPage();
-	const { user, login, loading, error } = useAuth();
+	const { user, login, processStatus, error } = useAuth();
 
 	const [email, setEmail] = useState("test1@gmail.com");
 	const [password, setPassword] = useState("1234");
@@ -83,7 +83,7 @@ export default function LoginForm() {
 			<div className="mb-4">
 				<button className="flex w-full flex-row bg-gold px-4 py-2 rounded hover:bg-yellow-300" onClick={(e) => handleLoginBtn(e)} >
 					<span className="flex-1">Log in</span>
-					{loading && <FaSpinner className="ml-auto h-5" size={20} />}
+					{processStatus == Constant.RESPONSE_LOGIN_REQUEST && <FaSpinner className="ml-auto h-5" size={20} />}
 				</button>
 			</div>
 

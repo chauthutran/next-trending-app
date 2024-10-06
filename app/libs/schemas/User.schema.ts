@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     password: String,
     role: { type: String, default: 'user' }, // 'user', 'admin'
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trend' }],
-    followedCategories: [{ type: String }],
+    followedCategories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     activity: [
       {
         trendId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trend' },

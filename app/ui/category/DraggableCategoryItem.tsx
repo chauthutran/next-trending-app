@@ -10,12 +10,13 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 interface DraggableCategoryItemProps {
     category: JSONObject;
     index: number;
+    selected: boolean;
     moveCategory: (fromIndex: number, toIndex: number) => void;
     itemClick?: (category: JSONObject) => void;
 }
 
 const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemProps>(
-    ({ category, index, moveCategory, itemClick }, ref) => {
+    ({ category, index, moveCategory, itemClick, selected }, ref) => {
         const dragRef = useRef<HTMLDivElement>(null);
         const [isDragging, setIsDragging] = useState(false); // State to track dragging
 
@@ -61,7 +62,10 @@ const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemPr
         return (
             <div
                 ref={dragRef}
-                className={`flex items-center p-2 border rounded-md space-x-2 ${isDragging ? 'dragging' : 'bg-snow-white'}`} // Apply dragging class
+                className={`flex items-center p-2 border rounded-md space-x-2 
+                        ${isDragging ? 'dragging' : 'bg-snow-white'}
+                        ${selected && 'border-2 border-blue-500'}
+                    `} // Apply dragging class
             >
                 {/* Drag icon to handle dragging */}
                 <div
@@ -75,7 +79,7 @@ const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemPr
                 </div>
 
                 {/* Category icon and name */}
-                {/* {category.icon && <div className="text-2xl">{category.icon}</div>} */}
+                {category.icon && <div className="text-2xl">{category.icon}</div>}
                 <div className="overflow-hidden cursor-pointer hover:text-blue-500" onClick={handleItemClick}>{category.name}</div>
             </div>
         );
