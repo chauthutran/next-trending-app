@@ -6,17 +6,17 @@ import { forwardRef } from "react";
 import { JSONObject } from "@/libs/definations";
 import { IoIosMove, IoIosAlert } from "react-icons/io";
 import { RxDragHandleDots2 } from "react-icons/rx";
+import { LiaTrashSolid } from "react-icons/lia";
 
 interface DraggableCategoryItemProps {
     category: JSONObject;
     index: number;
-    selected: boolean;
     moveCategory: (fromIndex: number, toIndex: number) => void;
     itemClick?: (category: JSONObject) => void;
 }
 
 const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemProps>(
-    ({ category, index, moveCategory, itemClick, selected }, ref) => {
+    ({ category, index, moveCategory, itemClick }, ref) => {
         const dragRef = useRef<HTMLDivElement>(null);
         const [isDragging, setIsDragging] = useState(false); // State to track dragging
 
@@ -62,10 +62,8 @@ const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemPr
         return (
             <div
                 ref={dragRef}
-                className={`flex items-center p-2 border rounded-md space-x-2 
-                        ${isDragging ? 'dragging' : 'bg-snow-white'}
-                        ${selected && 'border-2 border-blue-500'}
-                    `} // Apply dragging class
+                className={`flex items-center p-2 border border-gray-300 rounded-md space-x-2 w-full
+                         ${isDragging ? 'dragging' : 'bg-snow-white'}`}
             >
                 {/* Drag icon to handle dragging */}
                 <div
@@ -78,71 +76,19 @@ const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemPr
                     <RxDragHandleDots2 />
                 </div>
 
-                {/* Category icon and name */}
-                {/* {category.icon && <div className="text-2xl">{category.icon}</div>} */}
-                <div className="overflow-hidden cursor-pointer hover:text-blue-500" onClick={handleItemClick}>{category.name}</div>
+                <div className="category-icon">
+                    <div dangerouslySetInnerHTML={{ __html: category.icon }} />
+                </div>
+
+                <div className="overflow-hidden flex-1">{category.name}</div>
+
+                {/* Move the trash icon to the right */}
+                <button onClick={handleItemClick} className="m-auto text-red-500 text-right mr-3">
+                    <LiaTrashSolid size={25} />
+                </button>
             </div>
         );
     }
 );
 
 export default DraggableCategoryItem;
-
-
-
-
-
-
-// 'use client';
-
-// import { useEffect, useRef } from "react";
-// import { useDrag, useDrop } from "react-dnd";
-// import { forwardRef } from "react";
-// import { JSONObject } from "@/libs/definations";
-// import { IoIosMove } from "react-icons/io";
-
-
-// interface DraggableCategoryItemProps {
-//     category: JSONObject;
-//     index: number;
-//     moveCategory: (fromIndex: number, toIndex: number) => void;
-// }
-
-// const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemProps>(
-//     ({ category, index, moveCategory }, ref) => {
-//         const dragRef = useRef<HTMLDivElement>(null);
-
-//         const [, drag] = useDrag({
-//             type: 'CATEGORY',
-//             item: { index },
-//         });
-
-//         const [, drop] = useDrop({
-//             accept: 'CATEGORY',
-//             hover: (item: { index: number }) => {
-//                 if (item.index !== index) {
-//                     moveCategory(item.index, index);
-//                     item.index = index;  // Update the index for further hovers
-//                 }
-//             },
-//         });
-
-//         // Combine refs using the useEffect hook
-//         useEffect(() => {
-//             if (dragRef.current) {
-//                 drag(dragRef.current);
-//                 drop(dragRef.current);
-//             }
-//         }, [drag, drop]);
-
-//         return (
-//             <div ref={dragRef} className="flex items-center p-4 bg-gray-100 border rounded-md cursor-move space-x-2">
-//                 <IoIosMove />
-//                 <div className="text-2xl">{category.icon}</div>
-//                 <div className="overflow-hidden">{category.name}</div>
-//             </div>
-//         );
-//     }
-// );
-
-// export default DraggableCategoryItem;

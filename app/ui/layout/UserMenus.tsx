@@ -39,6 +39,7 @@ export default function UserMenus() {
         const ok = confirm("Are you sure you want to log-out ?");
         if( ok ) {
             logout();
+            setAppPage(Constant.PAGE_HOME);
         }
     }
     // Function to handle outside click
@@ -57,10 +58,10 @@ export default function UserMenus() {
                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             Profile
                         </li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => setAppPage(Constant.PAGE_USER_CATETORY_SELECTORS)}>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => { setAppPage(Constant.PAGE_USER_CATETORY_SELECTORS); toggleMenu()}}>
                             Settings
                         </li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleLogout()}>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => { handleLogout(); toggleMenu()}}>
                             Logout
                         </li>
                     </ul>

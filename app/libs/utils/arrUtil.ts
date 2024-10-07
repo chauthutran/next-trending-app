@@ -38,8 +38,7 @@ export const findItemFromList = ( list: JSONObject[], value: any, propertyName: 
 }
 
 
-export const findAndReplaceItemFromList = function( list: JSONObject[], searchValue: any, searchProperty: string, replacedData: JSONObject )
-{
+export const findAndReplaceItemFromList = ( list: JSONObject[], searchValue: any, searchProperty: string, replacedData: JSONObject ) => {
 	var found = false;
 	
 	// Found item, replace a new one
@@ -61,25 +60,9 @@ export const findAndReplaceItemFromList = function( list: JSONObject[], searchVa
 
 }
 
+// Remove objects from listA that are in listB based on propertyName( such as '_id' )
 
-export const removeFromArray = function( list: JSONObject[], value: string, propertyName: string )
-{
-	let index: any;
-
-	for( let i = 0; i < list.length; i++ )
-	{
-		var item = list[i];
-		if ( item[ propertyName ] == value ) 
-		{
-			index = i;
-			break;
-		}
-	}
-
-	if ( index != undefined ) 
-	{
-		list.splice( index, 1 );
-	}
-
-	return list;
+export const removeFromArray = ( listA: JSONObject[], listB: JSONObject[], propertyName: string ): JSONObject[] =>{
+	return listA.filter(aItem => !listB.some(bItem => bItem[propertyName] === aItem[propertyName]));
 };
+

@@ -13,7 +13,7 @@ import UserMenus from "./UserMenus";
 export default function Header() {
 
     const { appPage, setAppPage } = useAppPage();
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
 
     return (
         <header className="relative px-5 py-2 grid grid-cols-2 bg-white">
