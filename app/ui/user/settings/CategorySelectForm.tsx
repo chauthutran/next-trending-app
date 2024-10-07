@@ -66,6 +66,11 @@ const CategorySelectForm: React.FC = () => {
 
 	return (
 		<>
+			<h2 className="text-3xl font-bold mb-3">Settings</h2>
+
+			
+			<h2 className="text-2xl font-bold mt-5 mb-3">Select & Order Categories</h2>
+
 			<div className="flex py-3 space-x-5">
 
 				<div className="w-1/2 p-4 bg-gray-1 rounded-lg bg-opacity-20">
@@ -111,7 +116,7 @@ const CategorySelectForm: React.FC = () => {
 			</div>
 
 			<button
-				className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
+				className="bg-blue-500 text-white px-4 py-2 mb-3 rounded hover:bg-blue-600 w-full"
 				onClick={() => saveSelectedItems()}
 			>
 				Save Categories

@@ -39,7 +39,7 @@ console.log(appPage);
                 {appPage === Constant.PAGE_USER_REGISTRATION && <div className="mx-5 my-5">
                     <RegisterForm />
                 </div>}
-                {appPage === Constant.PAGE_USER_CATETORY_SELECTORS && <div className="mx-auto p-5 ">
+                {appPage === Constant.PAGE_USER_CATETORY_SELECTORS && <div className="mx-auto px-3 py-5">
                     <CategorySelectForm /> 
                 </div>}
                 
