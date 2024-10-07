@@ -69,7 +69,8 @@ const CategorySelectForm: React.FC = () => {
 			<div className="flex py-3 space-x-5">
 
 				<div className="w-1/2 p-4 bg-gray-1 rounded-lg bg-opacity-20">
-					<h2 className="font-semibold mb-3">Available Items</h2>
+					<h2 className="font-semibold">Available Items</h2>
+					<h2 className="text-sm italic mb-3 text-gray-500">Click on an item to move to the right side</h2>
 
 					<div className="grid grid-cols-1 gap-3">
 						{availableItems.map((item) => (
@@ -88,7 +89,9 @@ const CategorySelectForm: React.FC = () => {
 				</div>
 
 				<div className="w-1/2 p-4 bg-blue-2 rounded-lg bg-opacity-40">
-					<h2 className="font-semibold mb-3">Selected Items</h2>
+					<h2 className="font-semibold">Selected Items</h2>
+					<h2 className="text-sm italic mb-3 text-gray-500">Click on the trash icon to move to the left side</h2>
+
 
 					<DndProvider backend={HTML5Backend}>
 						<div className="grid grid-cols-1 gap-3">
