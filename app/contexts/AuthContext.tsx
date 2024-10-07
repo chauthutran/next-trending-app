@@ -11,6 +11,7 @@ interface AuthContextProps {
 	logout: () => void;
 	register: (user: JSONObject) => Promise<void>;
 	setUser: (user: JSONObject | null) => void,
+	saveFollowedCategories: (userId: string, categories: JSONObject[]) => void;
 	error: string | null;
 	processStatus: string;
 }
@@ -21,6 +22,7 @@ const AuthContext = createContext<AuthContextProps>({
 	logout: () => { },
 	register: async(user: JSONObject) => {},
 	setUser: (user: JSONObject | null) => {},
+	saveFollowedCategories: async(userId: string, categories: JSONObject[]) => {},
 	error: null,
 	processStatus: ""
 });
@@ -45,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 		const response: JSONObject = await dbService.login({email, password});
 
-		if (response.status != "success")  {
+		if (response.status !== "success")  {
 			setProcessStatus(Constant.RESPONSE_LOGIN_FAILURE);
 			setError(response.message);
 		}
@@ -75,8 +77,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}
 
+	const saveFollowedCategories = async(userId: string, categories: JSONObject[]) => {
+		setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_REQUEST);
+		setError(null);
+
+		const response = await dbService.saveFollowedCategories(user!._id, categories);
+		// const response = await dbService.saveFollowedCategories("670235925f2b78d23691af04", selectedItems);
+		if( response.status === "success" ) {
+			setUser(response.data);
+			setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_SUCCESS);
+		}
+		else {
+			setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_FAILURE);
+			setError(response.message);
+		}
+	}
+
 	return (
-		<AuthContext.Provider value={{ user, setUser, processStatus, error: error, login, logout, register }}>
+		<AuthContext.Provider value={{ user, setUser, processStatus, error: error, login, logout, register, saveFollowedCategories }}>
 			{children}
 		</AuthContext.Provider>
 	);

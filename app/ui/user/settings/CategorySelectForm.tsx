@@ -7,13 +7,15 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DraggableCategoryItem from "@/ui/category/DraggableCategoryItem";
 import { useAuth } from "@/contexts/AuthContext";
+import * as Constant from "@/libs/constants";
+import { FaSpinner } from "react-icons/fa";
 
 
 export default function CategorySelectForm() {
 
-	const { user, setUser } = useAuth();
+	const { user, saveFollowedCategories, processStatus } = useAuth();
 	const [categories, setCategories] = useState<JSONObject[] | null>(null);
-	const [selectedItems, setSelectedItems] = useState<JSONObject[]>([]);
+	const [selectedItems, setSelectedItems] = useState<JSONObject[]>(user!.followedCategories);
 
 
 	const fetchCategories = async () => {
@@ -38,15 +40,14 @@ export default function CategorySelectForm() {
 		fetchCategories();
 	}, []);
 
+	useEffect(() => {
+		if( processStatus === Constant.RESPONSE_SAVE_USER_CATEGORIES_REQUEST) {
+			alert("Settings is saved !");
+		}
+	}, [processStatus]);
+
 	const saveSelectedItems = async() => {
-		const response = await dbService.saveFollowedCategories(user!._id, selectedItems);
-		// const response = await dbService.saveFollowedCategories("670235925f2b78d23691af04", selectedItems);
-		if( response.status === "success" ) {
-			alert("The followed categories are saved !");
-		}
-		else {
-			console.log(response.message);
-		}
+		await saveFollowedCategories(user!._id, selectedItems);
 	}
 
 	const moveCategory = (fromIndex: number, toIndex: number) => {
@@ -81,6 +82,8 @@ export default function CategorySelectForm() {
 				onClick={() => saveSelectedItems()}
 			>
 				Save Categories
+
+				{processStatus == Constant.RESPONSE_SAVE_USER_CATEGORIES_REQUEST && <FaSpinner className="ml-auto h-5" size={20} />}
 			</button>
 		</div>
 	)
