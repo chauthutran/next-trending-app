@@ -6,8 +6,8 @@ import { useState } from "react";
 import UserCategoryList from "./user/UserCategoryList";
 import { useAppPage } from "@/contexts/AppPageContext";
 import * as Constant from "@/libs/constants";
-import CategorySelectForm from "./user/register/CategorySelectForm";
-import RegisterForm from "./user/register/RegisterForm";
+import CategorySelectForm from "./user/settings/CategorySelectForm";
+import RegisterForm from "./user/RegisterForm";
 import LoginForm from "./user/LoginForm";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -24,7 +24,9 @@ console.log(appPage);
            
             <main className={`flex-1 overflow-auto flex`}>
                 
-                {user !== null && <div className="mx-5">
+                {(user !== null && appPage !== Constant.PAGE_LOGIN &&
+                    appPage !== Constant.PAGE_USER_REGISTRATION &&
+                    appPage !== Constant.PAGE_USER_CATETORY_SELECTORS) && <div className="mx-5">
                     <UserCategoryList handleOnItemClick={(category: JSONObject) => setTopic(category)} />
                 </div>}
 
@@ -37,7 +39,9 @@ console.log(appPage);
                 {appPage === Constant.PAGE_USER_REGISTRATION && <div className="mx-5 my-5">
                     <RegisterForm />
                 </div>}
-                {appPage === Constant.PAGE_USER_CATETORY_SELECTORS && <CategorySelectForm /> }
+                {appPage === Constant.PAGE_USER_CATETORY_SELECTORS && <div className="mx-auto p-5 ">
+                    <CategorySelectForm /> 
+                </div>}
                 
 
             {/* Fixed Navigation Component */}

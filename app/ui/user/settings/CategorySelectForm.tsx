@@ -60,9 +60,9 @@ export default function CategorySelectForm() {
 	if (categories === null) return (<div>Loading ... </div>);
 
 	return (
-		<>
+		<div className="flex flex-col bg-white">
 			<DndProvider backend={HTML5Backend}>
-				<div className="p-4 grid grid-cols-3 gap-5">
+				<div className="p-4 grid grid-cols-5 gap-5">
 					{categories!.map((category, index) => (
 						<DraggableCategoryItem
 							key={category.id}
@@ -82,6 +82,6 @@ export default function CategorySelectForm() {
 			>
 				Save Categories
 			</button>
-		</>
+		</div>
 	)
 }

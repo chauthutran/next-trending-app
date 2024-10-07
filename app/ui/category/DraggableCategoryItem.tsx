@@ -79,7 +79,7 @@ const DraggableCategoryItem = forwardRef<HTMLDivElement, DraggableCategoryItemPr
                 </div>
 
                 {/* Category icon and name */}
-                {category.icon && <div className="text-2xl">{category.icon}</div>}
+                {/* {category.icon && <div className="text-2xl">{category.icon}</div>} */}
                 <div className="overflow-hidden cursor-pointer hover:text-blue-500" onClick={handleItemClick}>{category.name}</div>
             </div>
         );
