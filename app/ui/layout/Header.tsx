@@ -32,7 +32,12 @@ export default function Header() {
                 <button className={`border-b-2 hover:border-gray-500 px-2 ${appPage === Constant.PAGE_HOME ? "bg-blue-1 text-white" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_HOME)}>
                    Home
                 </button>
-                <button className={`border-b-2 hover:border-gray-500 px-2 ${appPage === Constant.PAGE_ABOUT ? "bg-blue-1 text-white" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_ABOUT)}>About</button>
+
+                {user !== null && <button className={`border-b-2 hover:border-gray-500 px-2 ${appPage === Constant.PAGE_POST_ITEM ? "bg-blue-1 text-white" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_POST_ITEM)}>
+                   Post
+                </button>}
+
+                {/* <button className={`border-b-2 hover:border-gray-500 px-2 ${appPage === Constant.PAGE_ABOUT ? "bg-blue-1 text-white" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_ABOUT)}>About</button> */}
                
                 {user === null && <button className={`border-b-2 hover:border-gray-500 px-2 ${appPage === Constant.PAGE_LOGIN ? "bg-blue-1 text-white" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_LOGIN)}>Login</button>}
                 {user === null && <button className={`border-b-2 hover:border-gray-500 px-2 ${appPage === Constant.PAGE_USER_REGISTRATION ? "bg-blue-1 text-white" : "border-white"}`} onClick={() => setAppPage(Constant.PAGE_USER_REGISTRATION)}>Register</button>}
