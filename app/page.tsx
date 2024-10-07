@@ -6,7 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import AppWrapper from "./ui/AppWrapper";
 import Footer from "./ui/layout/Footer";
 import Header from "./ui/layout/Header";
-import Navigation from "./ui/layout/Navigation";
+
 
 export default function Home() {
 

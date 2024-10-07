@@ -6,7 +6,7 @@ export default function Footer() {
 
 
     return (
-        <footer className="shadow-md p-1 pt-2 text-sm bg-black text-white">
+        <footer className="shadow-md p-1 pt-2 text-sm text-white bg-blue-1">
             <div className="flex flex-col justify-between items-center space-y-1">
                 <p className="flex-1 justify-center">© 2024 World Trending. All rights reserved.</p>
                 <div className="flex space-x-3">

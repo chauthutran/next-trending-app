@@ -18,19 +18,17 @@ export default function LoginForm() {
 	const { setAppPage } = useAppPage();
 	const { user, login, processStatus, error } = useAuth();
 
-	const [email, setEmail] = useState("test1@gmail.com");
+	const [email, setEmail] = useState("test1@example.com");
 	const [password, setPassword] = useState("1234");
 
-
 	useEffect(() => {
-		if (user != null) {
+		if( processStatus === Constant.RESPONSE_LOGIN_SUCCESS ) {
 			setAppPage( Constant.PAGE_HOME );
 		}
-	}, [user])
+	}, [processStatus]);
 
 	const handleLoginBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-
 		login(email, password);
 	};
 

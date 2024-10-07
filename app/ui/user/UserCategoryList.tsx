@@ -3,9 +3,11 @@
 import { JSONObject } from "@/libs/definations";
 import { useEffect, useState } from "react";
 import * as dbService from "@/libs/mongodb";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navigation({ handleOnItemClick }: { handleOnItemClick: (category: JSONObject) => void }) {
 
+	const { user } = useAuth();
 	const [categories, setCategories] = useState<JSONObject[] | null>(null);
 	const [loading, setLoading] = useState(false);
 
@@ -21,12 +23,10 @@ export default function Navigation({ handleOnItemClick }: { handleOnItemClick: (
 	useEffect(() => {
 		fetchCategories();
 	}, []);
-
-	if (categories === null) return (<div>Loading ...</div>);
-
+	
 	return (
 		<div className="grid grid-cols-5 w-full gap-4 items-start text-black">
-			{categories!.map((category, index) => (
+			{user!.followedCategories.map((category: JSONObject, index: number) => (
 				<button
 					key={index}
 					className="flex-1 flex flex-col items-center justify-start space-y-1 bg-white shadow-lg rounded-md border-light-pink p-1"

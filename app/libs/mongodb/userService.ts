@@ -13,8 +13,8 @@ export async function login({
 }: JSONObject): Promise<JSONObject> {
 	try {
 		await connectToDatabase();
-		const searchResult = await User.find({ email });
-
+		const searchResult = await User.find({ email }).populate("followedCategories");
+console.log(searchResult);
 		// Find the users with the password if there is password in parametters
 		let matchedUser: JSONObject | null = null;
 		for (let i = 0; i < searchResult.length; i++) {
