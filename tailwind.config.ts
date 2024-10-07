@@ -9,6 +9,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        "blue-1": "#0386d0",
+        "blue-2": "#469fd1",
+        "gray-1": "#9c9c9c",
+        
+        "green-1": "#00af1f",
+        "green-2": "#40d73f",
+        "green-3": "#9ecaa7",
+        "green-4": "#d6ecd3",
+        "yellow-1": "#f0df7b",
+        "yellow-2": "#d9bf4e",
+        "pink-1": "#ea9a9d",
+
+        "dusty-rose": "#ba6c94",
+        "dark-raspberry": "#9a316d",
+        "light-pink": "#d8a7be",
+
+        "bright-gold": "#fdb916",
+        "light-cream": "#fff1d1",
+        "orange-yellow": "#ffa340",
+        "light-peach": "#ffe8b1",
+
         "yellow-green": "#a9cf4f",
 
         "navy-blue": "#002366",

@@ -13,7 +13,7 @@ export default function Home() {
 	return (
 		<AppPageProvider>
 			<AuthProvider>
-				<div className="h-screen flex flex-col text-black">
+				<div className="h-screen flex flex-col text-black bg-snow-white">
 					<Header />
 					<AppWrapper />
 					<Footer />

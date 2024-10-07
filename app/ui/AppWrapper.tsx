@@ -8,6 +8,7 @@ import { useAppPage } from "@/contexts/AppPageContext";
 import * as Constant from "@/libs/constants";
 import CategorySelectForm from "./user/register/CategorySelectForm";
 import RegisterForm from "./user/register/RegisterForm";
+import LoginForm from "./user/LoginForm";
 
 
 export default function AppWrapper() {
@@ -18,11 +19,19 @@ export default function AppWrapper() {
 
     return (
         <>
-            {(appPage !== Constant.PAGE_USER_REGISTRATION && appPage !== Constant.PAGE_USER_CATETORY_SELECTORS) && <div className="mx-5">
+            {(appPage !== Constant.PAGE_USER_REGISTRATION 
+                && appPage !== Constant.PAGE_USER_CATETORY_SELECTORS
+                && appPage !== Constant.PAGE_LOGIN ) && <div className="mx-5">
                 <Navigation handleOnItemClick={(category: JSONObject) => setTopic(category)} />
             </div>}
 
             <main className={`flex-1 overflow-auto flex`}>
+                
+                {appPage === Constant.PAGE_LOGIN && <div className="mx-auto ">
+                    <LoginForm /> 
+                </div>}
+                
+
                 {appPage === Constant.PAGE_USER_REGISTRATION && <div className="mx-5 my-5">
                     <RegisterForm />
                 </div>}
