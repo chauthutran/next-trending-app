@@ -3,7 +3,6 @@
 import { JSONObject } from "@/libs/definations";
 import TrendByCategory from "./details/TrendDetailsPage";
 import { useState } from "react";
-import UserCategoryList from "./user/UserCategoryList";
 import { useAppPage } from "@/contexts/AppPageContext";
 import * as Constant from "@/libs/constants";
 import CategorySelectForm from "./user/settings/CategorySelectForm";
@@ -11,22 +10,21 @@ import RegisterForm from "./user/RegisterForm";
 import LoginForm from "./user/LoginForm";
 import { useAuth } from "@/contexts/AuthContext";
 import PostForm from "./post/PostForm";
+import HomePage from "./HomePage";
 
 
 export default function AppWrapper() {
 
     const { user } = useAuth();
     const { appPage } = useAppPage();
-    const [toppic, setTopic] = useState<JSONObject | null>(null);
 
-console.log(appPage);
     return (
         <>
-            <main className={`flex-1 overflow-auto flex`}>
+            <main className={`flex-1 overflow-auto`}>
                 
-                {appPage === Constant.PAGE_HOME && user !== null && <div>
-                    <UserCategoryList handleOnItemClick={(category: JSONObject) => setTopic(category)} />
-                </div>}
+                {appPage === Constant.PAGE_HOME && user !== null && 
+                    <HomePage />
+               }
 
                 {/* Login Form */}
                 {appPage === Constant.PAGE_LOGIN && <div className="mx-auto m-5">
@@ -46,19 +44,6 @@ console.log(appPage);
                 {appPage === Constant.PAGE_POST_ITEM && <div className="flex-1 items-center justify-center m-5">
                     <PostForm />
                 </div>}
-                
-
-            {/* Fixed Navigation Component */}
-            {/* <div className="fixed top-0 left-0"> Fixed positioning */}
-               
-            {/* </div> */}
-
-            {/* Main Content with Padding */}
-            <div className=""> {/* Adjust padding-top based on the height of your Navigation */}
-                {/* <SlideBar /> */}
-                {/* <CategoryList handleOnItemClick={(category: JSONObject) => setTopic(category)}/> */}
-                {toppic !== null && <TrendByCategory category={toppic} />}
-            </div>
         </main>
         </>
     )

@@ -19,7 +19,7 @@ export async function fetchPosts(): Promise<JSONObject> {
 	try {
 		await connectToDatabase();
 
-		const categories = await UserPost.find({});
+		const categories = await UserPost.find().sort({ createdAt: -1 }).limit(10);
 		return { status: "success", data: Utils.cloneJSONObject(categories) };
 	} catch (error: any) {
 		return { status: "error", message: error.message };

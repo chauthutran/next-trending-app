@@ -5,10 +5,8 @@ import connectToDatabase from "./db";
 import * as Encrypt from "./encryptPassword";
 import * as Utils from "@/libs/utils";
 import mongoose from "mongoose";
-
 import Category from '@/libs/schemas/Category.schema';
 import User from '@/libs/schemas/User.schema';
-
 
 
 export async function login({
@@ -92,7 +90,9 @@ export async function saveFollowedCategories(
 			{ new: true, runValidators: true } // Return the updated document
 		);
 		
-		return { status: "success", data: Utils.cloneJSONObject(updatedUser) };
+		const userData = await User.findById(userObjectId).populate('followedCategories'); // Optionally populate related fields
+
+		return { status: "success", data: Utils.cloneJSONObject(userData) };
 	} catch (error: any) {
 		return { status: "error", message: "UnknownError:" + error.message };
 	}
