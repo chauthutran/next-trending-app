@@ -81,15 +81,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_REQUEST);
 		setError(null);
 
-		const response = await dbService.saveFollowedCategories(user!._id, categories);
-		// const response = await dbService.saveFollowedCategories("670235925f2b78d23691af04", selectedItems);
-		if( response.status === "success" ) {
-			setUser(response.data);
-			setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_SUCCESS);
+		const response = await dbService.saveFollowedCategories(userId, categories);
+		
+		if (response.status !== "success")  {
+			setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_FAILURE);
+			setError(response.message!);
 		}
 		else {
-			setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_FAILURE);
-			setError(response.message);
+			setUser(response.data);
+			setProcessStatus(Constant.RESPONSE_SAVE_USER_CATEGORIES_SUCCESS);
 		}
 	}
 

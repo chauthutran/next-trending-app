@@ -10,6 +10,7 @@ import CategorySelectForm from "./user/settings/CategorySelectForm";
 import RegisterForm from "./user/RegisterForm";
 import LoginForm from "./user/LoginForm";
 import { useAuth } from "@/contexts/AuthContext";
+import PostForm from "./post/PostForm";
 
 
 export default function AppWrapper() {
@@ -21,26 +22,29 @@ export default function AppWrapper() {
 console.log(appPage);
     return (
         <>
-           
             <main className={`flex-1 overflow-auto flex`}>
                 
-                {(user !== null && appPage !== Constant.PAGE_LOGIN &&
-                    appPage !== Constant.PAGE_USER_REGISTRATION &&
-                    appPage !== Constant.PAGE_USER_CATETORY_SELECTORS) && <div className="mx-5">
+                {appPage === Constant.PAGE_HOME && user !== null && <div>
                     <UserCategoryList handleOnItemClick={(category: JSONObject) => setTopic(category)} />
                 </div>}
 
-
+                {/* Login Form */}
                 {appPage === Constant.PAGE_LOGIN && <div className="mx-auto m-5">
                     <LoginForm /> 
                 </div>}
                 
-
+                {/* Register Form */}
                 {appPage === Constant.PAGE_USER_REGISTRATION && <div className="mx-5 my-5">
                     <RegisterForm />
                 </div>}
+
+                {/* User Settings */}
                 {appPage === Constant.PAGE_USER_CATETORY_SELECTORS && <div className="mx-auto px-3 py-5">
                     <CategorySelectForm /> 
+                </div>}
+
+                {appPage === Constant.PAGE_POST_ITEM && <div className="xxx">
+                    <PostForm />
                 </div>}
                 
 

@@ -2,10 +2,14 @@
 
 import { JSONObject } from "../definations";
 import connectToDatabase from "./db";
-import User from "../schemas/User.schema";
 import * as Encrypt from "./encryptPassword";
 import * as Utils from "@/libs/utils";
 import mongoose from "mongoose";
+
+import Category from '@/libs/schemas/Category.schema';
+import User from '@/libs/schemas/User.schema';
+
+
 
 export async function login({
 	email,
@@ -13,8 +17,12 @@ export async function login({
 }: JSONObject): Promise<JSONObject> {
 	try {
 		await connectToDatabase();
+
+		// We need this statement to registered Category schema into the mongoose DB
+		// so that we can load "followedCategories" details for the logged user
+		await Category.find();
 		const searchResult = await User.find({ email }).populate("followedCategories");
-console.log(searchResult);
+
 		// Find the users with the password if there is password in parametters
 		let matchedUser: JSONObject | null = null;
 		for (let i = 0; i < searchResult.length; i++) {
@@ -32,10 +40,6 @@ console.log(searchResult);
 		if (matchedUser === null) {
 			return { status: "fail", message: "Username/Password is wrong" };
 		}
-
-		// const teamMemberIdObjs = matchedUser.teamMembers.map((id: string) => new mongoose.Types.ObjectId(id));
-		// const teamMembers = await User.find({ _id: { $in: teamMemberIdObjs } });
-		// matchedUser.teamMembers = teamMembers;
 
 		return { status: "success", data: Utils.cloneJSONObject(matchedUser) };
 	} catch (error: any) {

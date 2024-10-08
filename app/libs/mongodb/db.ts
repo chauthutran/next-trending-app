@@ -1,4 +1,9 @@
 import mongoose from 'mongoose';
+import Category from '@/libs/schemas/Category.schema';
+import User from '@/libs/schemas/User.schema';
+import Post from '@/libs/schemas/UserPost.schema';
+import Comment from '@/libs/schemas/Comment.schema';
+
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
@@ -36,6 +41,8 @@ async function connectToDatabase() {
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log('===== MongoDB connected.');
+      
+		console.log(mongoose.models);
       return mongoose;
     }).catch((error) => {
       console.error('MongoDB connection error:', error);

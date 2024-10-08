@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema({
-	name: { type: String, require: true }, // e.g., 'Fashion', 'Makeup', 'Books'
+	name: { type: String, require: true, unique: true }, // e.g., 'Fashion', 'Makeup', 'Books'
 	description: { type: String, require: true },
-    icon: { type: String, require: true },
-	trends: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
+    icon: { type: String, require: true }
 });
 
-const Category =
-	mongoose.models.Category || mongoose.model("Category", CategorySchema);
+// Register the model
+const Category = mongoose.models.Category || mongoose.model('Category', CategorySchema);
 
 export default Category;

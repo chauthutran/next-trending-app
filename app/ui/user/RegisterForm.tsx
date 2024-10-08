@@ -56,14 +56,7 @@ export default function RegisterForm() {
 	const checkValidUser = () => {
 		return (email !== "" && password !== "" && confirmPassword === password);
 	}
-
-	const handleCancelBtn = () => {
-		const ok = confirm("Are you sure you don't want to register an account ?")
-		if (ok) {
-			setAppPage(Constant.PAGE_HOME);
-		}
-	}
-
+	
 	return (
 		<section className="">
 			<p className="text-lg text-justify">Creating an account with us is quick and easy. By registering, you’ll unlock access to exclusive features, personalized recommendations, and a faster checkout experience. Join our community today and start exploring everything we have to offer!</p>
