@@ -50,11 +50,7 @@ body {
   height: 80px;
 }
 
-.half-moon {
-  position: relative;
-  background-color: #3b82f6; /* Blue color */
-  width: 200px;
-  height: 100px;
-  border-radius: 0 0 100px 100px; /* Rounded top corners for half-moon */
-  overflow: hidden;
+.category-icon-small svg {
+  width: 40px;
+  height: 40px;
 }

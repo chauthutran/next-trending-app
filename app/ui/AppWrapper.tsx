@@ -43,7 +43,7 @@ console.log(appPage);
                     <CategorySelectForm /> 
                 </div>}
 
-                {appPage === Constant.PAGE_POST_ITEM && <div className="xxx">
+                {appPage === Constant.PAGE_POST_ITEM && <div className="flex-1 items-center justify-center m-5">
                     <PostForm />
                 </div>}
                 
