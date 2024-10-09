@@ -38,7 +38,7 @@ export default function CategoryBar({ categories, handleOnItemClick }: { categor
 			<div className="relative text-gray-800 flex border-y border-gray-300 items-center">
 				<button
 					onClick={scrollLeft}
-					className="h-[110px] flex items-center justify-center bg-blue-1 text-white"
+					className="h-[127px] flex items-center justify-center bg-blue-1 text-white"
 				>
 					<TiMediaPlayReverse size={25} />
 				</button>
@@ -58,14 +58,14 @@ export default function CategoryBar({ categories, handleOnItemClick }: { categor
 									<div dangerouslySetInnerHTML={{ __html: category.icon }} />
 								</div>
 							</div>
-							<div className="text-xs font-semibold">{category.name}</div>
+							<div className="text-xs font-semibold p-2">{category.name}</div>
 						</button>
 					))}
 				</div>
 
 				<button
 					onClick={scrollRight}
-					className="h-[110px] flex items-center justify-center bg-blue-1 text-white"
+					className="h-[127px] flex items-center justify-center bg-blue-1 text-white"
 				>
 					<TiMediaPlay size={25} />
 				</button>

@@ -15,17 +15,17 @@ cloudinary.v2.config({
 	api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-
 const ITEMS_PER_PAGE = 10;
 
 export async function fetchPosts(pageNo: number): Promise<JSONObject> {
 	try {
 		await connectToDatabase();
-		
+
 		const skip = (Number(pageNo) - 1) * ITEMS_PER_PAGE;
 		await User.find();
-		const categories = await UserPost.find().populate("author")
-			.sort({createdAt: -1})
+		const categories = await UserPost.find()
+			.populate("author")
+			.sort({ createdAt: -1 })
 			.skip(skip)
 			.limit(ITEMS_PER_PAGE);
 
@@ -38,19 +38,21 @@ export async function fetchPosts(pageNo: number): Promise<JSONObject> {
 export async function createPost(payload: JSONObject) {
 	try {
 		await connectToDatabase();
-		
+
 		// Upload image to Cloudinary if provided
 		let imageUrl = "";
 		if (payload.imageFile) {
 			try {
-				const result = await cloudinary.v2.uploader.upload(payload.imageFile, {
-				  folder: "trending",
-				});
+				const result = await cloudinary.v2.uploader.upload(
+					payload.imageFile,
+					{
+						folder: "trending",
+					}
+				);
 				imageUrl = result.secure_url;
-			  } catch (error) {
-				console.error('Error uploading to Cloudinary:', error);
-			  }
-
+			} catch (error) {
+				console.error("Error uploading to Cloudinary:", error);
+			}
 		}
 
 		const categoryObjectIdList = payload.categories.map(
@@ -73,3 +75,70 @@ export async function createPost(payload: JSONObject) {
 		return { status: "error", message: error.message };
 	}
 }
+
+export async function updateLikeUnlike (
+	postId: string,
+	userId: string,
+	action: "like" | "unlike"
+) {
+	try {
+		await connectToDatabase();
+
+		// Find the post by ID
+		const post = await UserPost.findById(postId);
+
+		if (!post) {
+			throw new Error("Post not found");
+		}
+
+		const hasLiked = post.likes.includes(userId);
+		const hasUnliked = post.unlikes.includes(userId);
+
+		if (action === "like") {
+			if (hasLiked) {
+				// If the user has already liked the post, remove the like
+				const result = await UserPost.findByIdAndUpdate(
+					postId,
+					{ $pull: { likes: userId } },
+					{ new: true }
+				);
+				
+				return { status: "success", data: Utils.cloneJSONObject(result) };
+			} else {
+				// Add like and remove unlike if the user has unliked the post
+				const result = await UserPost.findByIdAndUpdate(
+					postId,
+					{
+						$addToSet: { likes: userId }, // Ensure the user is added to likes
+						$pull: { unlikes: userId }, // Ensure the user is removed from unlikes
+					},
+					{ new: true }
+				);
+				return { status: "success", data: Utils.cloneJSONObject(result) };
+			}
+		} else if (action === "unlike") {
+			if (hasUnliked) {
+				// If the user has already unliked the post, remove the unlike
+				const result = await UserPost.findByIdAndUpdate(
+					postId,
+					{ $pull: { unlikes: userId } },
+					{ new: true }
+				);
+				return { status: "success", data: Utils.cloneJSONObject(result) };
+			} else {
+				// Add unlike and remove like if the user has liked the post
+				const result = await UserPost.findByIdAndUpdate(
+					postId,
+					{
+						$addToSet: { unlikes: userId }, // Ensure the user is added to unlikes
+						$pull: { likes: userId }, // Ensure the user is removed from likes
+					},
+					{ new: true }
+				);
+				return { status: "success", data: Utils.cloneJSONObject(result) };
+			}
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};

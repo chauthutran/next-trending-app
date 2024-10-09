@@ -12,6 +12,14 @@ import { IoShareSocialOutline } from 'react-icons/io5';
 export default function UserPostItem({data}: {data: JSONObject}) {
 
     const { user } = useAuth();
+
+    const handleLikePost = async() => {
+        const response = await dbService.updateLikeUnlike(data._id, user!._id, 'like');
+    }
+
+    const handleUnlikePost = async() => {
+        const response = await dbService.updateLikeUnlike(data._id, user!._id, 'unlike');
+    }
     
     return (
         <div className="bg-white shadow-md rounded-md p-4 space-y-3">
@@ -32,11 +40,15 @@ export default function UserPostItem({data}: {data: JSONObject}) {
 
             {user !== null && <div className="grid grid-cols-4 w-full">
                 <div className="flex space-x-1">
-                    <BiLike />
+                    {data.like.indexOf(user!._id) <0 
+                        ? <div><BiLike onClick={() => {handleLikePost()}}/></div>
+                        : <div><BiSolidLike onClick={() => {handleLikePost()}}/></div>}
                     <div>Like</div>
                 </div>
                 <div className="flex space-x-1">
-                    <BiDislike />
+                    {data.unlikes.indexOf(user!._id) <0 
+                        ? <div><BiDislike onClick={() => {handleUnlikePost()}}/></div>
+                        : <div><BiSolidDislike onClick={() => {handleUnlikePost()}}/></div>}
                     <div>Unlike</div>
                 </div>
                 <div className="flex space-x-1">

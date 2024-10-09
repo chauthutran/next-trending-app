@@ -44,17 +44,14 @@ const UserPostList: React.FC = () => {
     };
 
     useEffect(() => {
-        console.log("=== useEffect pageNo: " + pageNo);
         fetchPosts(pageNo);
     }, [pageNo]);
 
     useEffect(() => {
-        console.log("=== useEffect loading: " + loading);
         window.addEventListener('scroll', handleScroll);
         return () => {
           window.removeEventListener('scroll', handleScroll);
         };
-    // }, [loading]);
     }, [loading, hasMore]);
 
 

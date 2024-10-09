@@ -13,8 +13,10 @@ export default function Home() {
 	return (
 		<AppPageProvider>
 			<AuthProvider>
-				{/* <div className="h-screen flex flex-col text-black bg-snow-white"> */}
-				<div className="flex flex-col text-black bg-snow-white">
+				{/* <div className="h-screen flex flex-col text-black bg-snow-white">
+				<div className="flex flex-col text-black bg-snow-white"> */}
+				<div className="flex flex-col min-h-screen">
+
 					<Header />
 					<AppWrapper />
 					<Footer />

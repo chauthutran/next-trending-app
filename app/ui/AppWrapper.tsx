@@ -23,7 +23,7 @@ export default function AppWrapper() {
             <main className={`flex-1 overflow-auto`}>
                 
                 {/* Login Form */}
-                {appPage === Constant.PAGE_LOGIN && <div className="my-5 mx-auto max-w-xl">
+                {appPage === Constant.PAGE_LOGIN && <div className="container my-5 mx-auto max-w-sm">
                     <LoginForm /> 
                 </div>}
 
