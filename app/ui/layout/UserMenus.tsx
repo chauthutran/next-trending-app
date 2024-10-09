@@ -42,6 +42,7 @@ export default function UserMenus() {
             setAppPage(Constant.PAGE_HOME);
         }
     }
+    console.log("showMenu", showMenu);
     // Function to handle outside click
     return (
         <div className="relative inline-block">
@@ -52,7 +53,7 @@ export default function UserMenus() {
             {showMenu && (
                 <div
                     ref={menuRef}
-                    className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg"
+                    className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50"
                 >
                     <ul>
                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">

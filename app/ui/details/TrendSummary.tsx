@@ -28,7 +28,6 @@ export default function TrendSummary({ category }: { category: JSONObject }) {
 		});
 		const data = await response.json();
 		const results = data.data.split("\n");
-		console.log(results);
 		setSummary(results);
 	};
 

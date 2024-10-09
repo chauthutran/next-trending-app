@@ -6,6 +6,7 @@ import * as Utils from "@/libs/utils";
 import UserPost from "../schemas/UserPost.schema";
 import cloudinary from "cloudinary";
 import mongoose from "mongoose";
+import User from "../schemas/User.schema";
 
 // Configure Cloudinary
 cloudinary.v2.config({
@@ -15,11 +16,19 @@ cloudinary.v2.config({
 });
 
 
-export async function fetchPosts(): Promise<JSONObject> {
+const ITEMS_PER_PAGE = 10;
+
+export async function fetchPosts(pageNo: number): Promise<JSONObject> {
 	try {
 		await connectToDatabase();
+		
+		const skip = (Number(pageNo) - 1) * ITEMS_PER_PAGE;
+		await User.find();
+		const categories = await UserPost.find().populate("author")
+			.sort({createdAt: -1})
+			.skip(skip)
+			.limit(ITEMS_PER_PAGE);
 
-		const categories = await UserPost.find().sort({ createdAt: -1 }).limit(10);
 		return { status: "success", data: Utils.cloneJSONObject(categories) };
 	} catch (error: any) {
 		return { status: "error", message: error.message };
@@ -61,7 +70,6 @@ export async function createPost(payload: JSONObject) {
 
 		return { status: "success", data: Utils.cloneJSONObject(result) };
 	} catch (error: any) {
-		console.log(error);
 		return { status: "error", message: error.message };
 	}
 }

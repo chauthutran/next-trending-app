@@ -11,11 +11,11 @@ const config: Config = {
       colors: {
         "blue-1": "#0386d0",
         "blue-2": "#469fd1",
-        "gray-1": "#9c9c9c",
         "blue-3": "#043873",
-        "blue-4": "#fbc343",
-        "blue-5": "#4f9cf9",
         "blue-6": "#4f9cf9",
+        "blue-5": "#2b65af",
+        "gray-1": "#9c9c9c",
+        "blue-4": "#fbc343",
         
         "green-1": "#00af1f",
         "green-2": "#40d73f",

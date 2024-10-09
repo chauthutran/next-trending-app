@@ -57,7 +57,8 @@ export default function PostForm() {
 
     const handleCategoryOnClick = (e: React.MouseEvent<HTMLInputElement>, category: JSONObject) => {
         const selectedCategoryId = category._id;
-        if (!e.target.checked) { // Remove
+        const target = e.target as HTMLInputElement;
+        if (!target.checked) { // Remove
             const result = categories.filter(item => item !== selectedCategoryId);
             setCategories(result);
         }

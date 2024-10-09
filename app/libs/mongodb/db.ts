@@ -41,8 +41,6 @@ async function connectToDatabase() {
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log('===== MongoDB connected.');
-      
-		console.log(mongoose.models);
       return mongoose;
     }).catch((error) => {
       console.error('MongoDB connection error:', error);

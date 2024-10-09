@@ -22,7 +22,6 @@ export async function POST(request: NextRequest) {
 			// geo: 'US',
 		});
 		
-console.log(results);
 		// const results = await googleTrends.relatedTopics({
 		// 	keyword: 'fashion',
 		// 	geo: 'US', // Specify 'US' or 'WORLD' for global data

@@ -22,19 +22,21 @@ export default function AppWrapper() {
         <>
             <main className={`flex-1 overflow-auto`}>
                 
-                {appPage === Constant.PAGE_HOME && user !== null && 
-                    <HomePage />
-               }
-
                 {/* Login Form */}
-                {appPage === Constant.PAGE_LOGIN && <div className="mx-auto m-5">
+                {appPage === Constant.PAGE_LOGIN && <div className="my-5 mx-auto max-w-xl">
                     <LoginForm /> 
                 </div>}
+
                 
                 {/* Register Form */}
                 {appPage === Constant.PAGE_USER_REGISTRATION && <div className="mx-5 my-5">
                     <RegisterForm />
                 </div>}
+
+
+                {appPage === Constant.PAGE_HOME && 
+                    <HomePage />
+               }
 
                 {/* User Settings */}
                 {appPage === Constant.PAGE_USER_CATETORY_SELECTORS && <div className="mx-auto px-3 py-5">

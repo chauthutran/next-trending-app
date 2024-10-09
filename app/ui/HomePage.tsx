@@ -1,22 +1,50 @@
 'use client';
 
 import { JSONObject } from "@/libs/definations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserCategoryList from "./user/UserCategoryList";
 import UserPostList from "./post/UserPostList";
+import { useAuth } from "@/contexts/AuthContext";
+import * as dbService from "@/libs/mongodb";
+import CategoryBar from "./layout/CategoryBar";
 
 
 export default function HomePage() {
 
+    const { user } = useAuth();
     const [toppic, setTopic] = useState<JSONObject | null>(null);
 
-    return (
-    <div className="m-3">
-        <UserCategoryList handleOnItemClick={(category: JSONObject) => setTopic(category)} />
+	const [categories, setCategories] = useState<JSONObject[] | null>(null);
+	const [loading, setLoading] = useState(false);
+	
+	const fetchCategories = async () => {
+		setLoading(true);
+		const response = await dbService.fetchCategories();
+		setCategories(response.data);
 
-        {/* <div className="mt-5">
-            <UserPostList />
-        </div> */}
-    </div>
+		setLoading(false);
+	};
+
+	useEffect(() => {
+		if( user === null ) {
+            fetchCategories();
+        }
+        else {
+            setCategories(user.followedCategories);
+        }
+	}, []);
+
+
+    if( categories === null ) return( <div>Loading ...</div>);
+
+    return (
+        <div className="">
+            {/* {user != null && <UserCategoryList  />} */}
+            <CategoryBar categories={categories} handleOnItemClick={(category: JSONObject) => setTopic(category)} />
+
+            <div className="m-5">
+                <UserPostList />
+            </div>
+        </div>
     )
 }
