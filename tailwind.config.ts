@@ -25,6 +25,16 @@ const config: Config = {
         "yellow-2": "#d9bf4e",
         "pink-1": "#ea9a9d",
 
+        "green-5": "#2d392f",
+        "green-6": "#215c27",
+        "green-7": "#365f43",
+        "green-8": "#c0d9d5",
+        "green-9": "#95b2b0",
+        "yellow-3": "#d0d799",
+        "yellow-4": "#d8e09c",
+        
+
+
         "dusty-rose": "#ba6c94",
         "dark-raspberry": "#9a316d",
         "light-pink": "#d8a7be",

@@ -16,14 +16,14 @@ export default function Header() {
     const { user } = useAuth();
 
     return (
-        <header className="relative px-5 py-2 grid grid-cols-2 bg-white">
+        <header className="relative px-5 grid grid-cols-2 bg-white py-3">
 
             <div className="absolute text-right opacity-45 right-0 text-blue-1">
                 <GiOakLeaf size={70} />
             </div>
             
             <div className="flex items-center text-3xl font-extrabold space-x-3">
-                <div className="">World</div>
+                <div className="text-blue-5">World</div>
                 <div className="">Trending</div>
             </div>
 

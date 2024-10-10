@@ -76,11 +76,7 @@ export async function createPost(payload: JSONObject) {
 	}
 }
 
-export async function updateLikeUnlike (
-	postId: string,
-	userId: string,
-	action: "like" | "unlike"
-) {
+export async function updateLikeUnlike ( postId: string, userId: string, action: "like" | "unlike" ) {
 	try {
 		await connectToDatabase();
 
@@ -94,6 +90,7 @@ export async function updateLikeUnlike (
 		const hasLiked = post.likes.includes(userId);
 		const hasUnliked = post.unlikes.includes(userId);
 
+		
 		if (action === "like") {
 			if (hasLiked) {
 				// If the user has already liked the post, remove the like
@@ -101,7 +98,7 @@ export async function updateLikeUnlike (
 					postId,
 					{ $pull: { likes: userId } },
 					{ new: true }
-				);
+				).populate("author");
 				
 				return { status: "success", data: Utils.cloneJSONObject(result) };
 			} else {
@@ -113,7 +110,7 @@ export async function updateLikeUnlike (
 						$pull: { unlikes: userId }, // Ensure the user is removed from unlikes
 					},
 					{ new: true }
-				);
+				).populate("author");
 				return { status: "success", data: Utils.cloneJSONObject(result) };
 			}
 		} else if (action === "unlike") {
@@ -123,7 +120,7 @@ export async function updateLikeUnlike (
 					postId,
 					{ $pull: { unlikes: userId } },
 					{ new: true }
-				);
+				).populate("author");
 				return { status: "success", data: Utils.cloneJSONObject(result) };
 			} else {
 				// Add unlike and remove like if the user has liked the post
@@ -134,11 +131,66 @@ export async function updateLikeUnlike (
 						$pull: { likes: userId }, // Ensure the user is removed from likes
 					},
 					{ new: true }
-				);
+				).populate("author");
 				return { status: "success", data: Utils.cloneJSONObject(result) };
 			}
 		}
-	} catch (error) {
-		console.error(error);
+	} catch (error: any) {
+		return { status: "error", message: error.message };
 	}
 };
+
+
+
+export async function updateLikeUnlikeList () {
+	try {
+		await connectToDatabase();
+
+		const userIdArray = [
+			"6704ba2d7d249859d40c35ce",
+			"670633038c6acce24c80442e",
+			"670633038c6acce24c80442f",
+			"670633038c6acce24c804430",
+			"670633038c6acce24c804431",
+			"670633038c6acce24c804432",
+			"670633038c6acce24c804433",
+			"670633038c6acce24c804434",
+			"670633038c6acce24c804435",
+			"670633038c6acce24c804436",
+			"670633038c6acce24c804437",
+			"670633038c6acce24c804438",
+			"670633038c6acce24c804439",
+			"670633038c6acce24c80443a",
+			"670633038c6acce24c80443b"]
+
+		// Find the post by ID
+		const posts = await UserPost.find();
+
+		for( var i=0; i< posts.length; i++ ) {
+			const post = posts[i];
+			// const ramdomAction = getRandomItem(["likes","unlikes"]);
+			
+			const randomUserIdlist = getRandomSublist(userIdArray).map((item) => new mongoose.Types.ObjectId(item));
+			post.likes = randomUserIdlist;
+
+			await UserPost.findByIdAndUpdate(new mongoose.Types.ObjectId(post._id), post);
+		}
+
+
+		console.log("SUCCESS");
+
+	} catch (error: any) {
+		console.log("ERROR", error);
+	}
+};
+
+function getRandomSublist(array: string[]) {
+	const randomLength = Math.floor(Math.random() * array.length) + 1; // Random length between 1 and array length
+	const shuffledArray = array.sort(() => 0.5 - Math.random()); // Shuffle the array to get random items
+	return shuffledArray.slice(0, randomLength); // Slice the array to get the sublist
+  }
+
+  function getRandomItem(array: string[]) {
+	const randomIndex = Math.floor(Math.random() * array.length); // Random index between 0 and array length - 1
+	return array[randomIndex]; // Return the item at the random index
+  }

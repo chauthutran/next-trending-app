@@ -38,14 +38,14 @@ export default function CategoryBar({ categories, handleOnItemClick }: { categor
 			<div className="relative text-gray-800 flex border-y border-gray-300 items-center">
 				<button
 					onClick={scrollLeft}
-					className="h-[127px] flex items-center justify-center bg-blue-1 text-white"
+					className="h-[135px] flex items-center justify-center bg-gray-1 text-white hover:bg-gray-500"
 				>
 					<TiMediaPlayReverse size={25} />
 				</button>
 
 				<div
 					ref={scrollRef}
-					className="flex flex-1 w-full overflow-x-hidden scroll-smooth items-start text-sm text-black scrollbar-custom bg-gray-300"
+					className="flex flex-1 w-full overflow-x-auto scroll-smooth items-start text-sm text-black scrollbar-custom bg-gray-300 scrollbar-custom"
 				>
 					{categories.map((category: JSONObject, index: number) => (
 						<button
@@ -58,14 +58,14 @@ export default function CategoryBar({ categories, handleOnItemClick }: { categor
 									<div dangerouslySetInnerHTML={{ __html: category.icon }} />
 								</div>
 							</div>
-							<div className="text-xs font-semibold p-2">{category.name}</div>
+							<div className="text-xs font-semibold p-2 text-blue-5">{category.name}</div>
 						</button>
 					))}
 				</div>
 
 				<button
 					onClick={scrollRight}
-					className="h-[127px] flex items-center justify-center bg-blue-1 text-white"
+					className="h-[135px] flex items-center justify-center bg-gray-1 text-white hover:bg-gray-500"
 				>
 					<TiMediaPlay size={25} />
 				</button>

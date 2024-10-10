@@ -38,7 +38,6 @@ const UserPostList: React.FC = () => {
           !loading
          && hasMore
         ) {
-            console.log("=== handleScroll ");
           setPageNo((prev) => prev + 1); // Load more posts
         }
     };
