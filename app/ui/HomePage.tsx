@@ -7,6 +7,8 @@ import UserPostList from "./post/UserPostList";
 import { useAuth } from "@/contexts/AuthContext";
 import * as dbService from "@/libs/mongodb";
 import CategoryBar from "./layout/CategoryBar";
+import CategoryList from "./category/CategoryList";
+import CategorySmallBar from "./layout/CategorySmallBar";
 
 
 export default function HomePage() {
@@ -40,8 +42,9 @@ export default function HomePage() {
     return (
         <div className="">
             {/* {user != null && <UserCategoryList  />} */}
-            <CategoryBar categories={categories} handleOnItemClick={(category: JSONObject) => setTopic(category)} />
-
+            {/* <CategoryBar categories={categories} handleOnItemClick={(category: JSONObject) => setTopic(category)} /> */}
+            <CategorySmallBar categories={categories} handleOnItemClick={(category: JSONObject) => setTopic(category)} />
+            
             <div className="m-5">
                 <UserPostList />
             </div>

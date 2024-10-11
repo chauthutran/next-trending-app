@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { JSONObject } from '@/libs/definations';
 import * as dbService from "@/libs/mongodb";
-import UserPostItem from './UserPostItem';
+import UserPostDetails from './UserPostDetails';
 
 
 const UserPostList: React.FC = () => {
@@ -63,7 +63,7 @@ const UserPostList: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/* <div className="grid grid-cols-1 gap-4"> */}
                 {posts.map((post) => (
-                    <UserPostItem key={`list_${post._id}`} data={post} />
+                    <UserPostDetails key={`list_${post._id}`} data={post} />
                 ))}
             </div>
 

@@ -13,7 +13,7 @@ import * as Constant from "@/libs/constants";
 import IconWithBadge from '../basic/IconWithBadge';
 
 
-export default function UserPostItem({data}: {data: JSONObject}) {
+export default function UserPostDetails({data}: {data: JSONObject}) {
 
     const { user } = useAuth();
     const [postItem, setPostItem] = useState<JSONObject>(data);
@@ -22,8 +22,6 @@ export default function UserPostItem({data}: {data: JSONObject}) {
     const handleLikeUnlikePost = async(type: "like" | "unlike") => {
         const response = await dbService.updateLikeUnlike(data._id, user!._id, type);
         
-        console.log("handleLikeUnlikePost", type);
-        console.log(response);
         if( response!.status === "success" ) {
             setPostItem(response!.data);
         }

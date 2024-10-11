@@ -13,18 +13,6 @@ const CategoryList = ({ handleOnItemClick }: { handleOnItemClick: (category: JSO
 	const [categories, setCategories] = useState<JSONObject[] | null>(null);
 	const [loading, setLoading] = useState(false);
 
-	//   const fetchCategories = async () => {
-	//       setLoading(true);
-	//       const res = await fetch('/api/category');
-
-	//       const data = await res.json();
-
-	//     // --- dailyTrends
-	//     setCategories(data.data);
-
-	//       setLoading(false);
-	//     };
-
 	const fetchCategories = async () => {
 		setLoading(true);
 		const response = await dbService.fetchCategories();
@@ -51,9 +39,9 @@ const CategoryList = ({ handleOnItemClick }: { handleOnItemClick: (category: JSO
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<div className="p-4 grid grid-cols-5 gap-5">
-				{/* {categories!.map((category, index) => (
+				{categories!.map((category, index) => (
 					<DraggableCategoryItem key={category.id} category={category} index={index} moveCategory={moveCategory} itemClick={(item) => handleOnItemClick(item)} />
-				))} */}
+				))}
 			</div>
 		</DndProvider>
 	);
